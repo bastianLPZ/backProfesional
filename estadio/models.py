@@ -1,3 +1,1 @@
-from django.db import models
-
-# Create your models here.
+from estadio.models import Rol, Usuario, Subcancha, Reserva, ReservaEquipamiento, Mantenimiento, Inventario, Cancha, Clase

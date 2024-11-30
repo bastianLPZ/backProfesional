@@ -25,13 +25,19 @@ SECRET_KEY = 'django-insecure-9@^3aocs^bm-6zrm*g-5*6jfz&-w)s!0k9xr&r!lde6em2cv7b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+import os
+
+# Clave secreta para firmar los JWT
+JWT_SECRET = os.getenv('JWT_SECRET', 'super-secret-key')  # Usa una clave fuerte
+JWT_EXP_DELTA_SECONDS = 3600  # El token expirará en 1 hora
 
 # Application definition
 
 INSTALLED_APPS = [
     'estadio',
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -88,6 +95,9 @@ DATABASES = {
     }
 }
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Esta línea es crucial
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -129,3 +139,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'estadio.Usuario'  # Asegúrate de que 'estadio' es el nombre de tu aplicación
