@@ -31,7 +31,7 @@ def crear_class(request):
 
             print(f'Data: {data}')
             
-            usuario = Usuario.objects.get(id=27)
+            usuario = Usuario.objects.get(id=data.get("user_id"))  # Error solucionado ✅
 
             # Crear la clase
             clase = Clase.objects.create(
@@ -44,7 +44,6 @@ def crear_class(request):
             clase.save()
 
             return JsonResponse({'message': 'Clase creada correctamente'}, safe=False, status=200)
-
         except Exception as e:
             # Captura de excepciones generales
             print(f"Error: {e}")
